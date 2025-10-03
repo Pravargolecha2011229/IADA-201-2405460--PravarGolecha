@@ -126,4 +126,11 @@ The Streamlit app (`app.py`) provides an interactive platform for real-time clas
 
 ---
 
+### Snippets of UI (User Iterface)
+<img width="1852" height="845" alt="Screenshot 2025-10-03 112018" src="https://github.com/user-attachments/assets/c0521782-4303-403c-a6fa-9342020132ff" />
+<img width="1247" height="758" alt="Screenshot 2025-10-03 112123" src="https://github.com/user-attachments/assets/a465ad94-9267-4350-b19a-b4c890bc8d6a" />
+<img width="1144" height="824" alt="Screenshot 2025-10-03 112140" src="https://github.com/user-attachments/assets/5136370a-91ea-4d74-ab4a-4d8f33842638" />
+
+---
+
 Made by Pravar Golecha
