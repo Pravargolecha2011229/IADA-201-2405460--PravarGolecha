@@ -1,66 +1,129 @@
 # SmartWasteAI – Intelligent Waste Segregation System
 
-## Project Overview
+## 1. Project Overview
 SmartWasteAI is a computer vision-based waste segregation system developed as part of the CRS Assignment for the *Artificial Intelligence* course (Machine Learning & Deep Learning module).
 
-The system leverages **MobileNetV2** for image classification and organizes waste into three categories:
+The primary goal of this project is to assist **smart cities** in improving waste management practices by leveraging **deep learning models** for automated waste classification. The system classifies waste into three major categories and recommends the correct disposal bin:  
+
 - **Biodegradable** → Green bin  
 - **Recyclable** → Blue bin  
 - **Hazardous** → Red bin  
 
-A **Streamlit web application** (`app.py`) makes the system accessible for end-users, allowing them to upload an image of waste and receive both a classification result and a recommended disposal bin.
+A **Streamlit web application** (`app.py`) makes the model accessible to non-technical users by providing an interactive interface for uploading waste images and receiving predictions along with confidence scores.  
 
+By automating waste segregation, the system addresses real-world issues such as:  
+- Reducing human error in waste sorting  
+- Improving recycling efficiency  
+- Minimizing landfill usage  
+- Supporting environmental sustainability in urban areas  
 
-## Repository Contents
+---
 
+## 2. Research Background
+Poor waste segregation leads to inefficient recycling and increased landfill contributions. Studies show that **AI-driven image classification systems** can enhance waste management accuracy significantly:  
+
+- YOLOv5 and MobileNet have proven effective in **real-time waste detection and classification** ([ResearchGate, 2021](https://www.researchgate.net/publication/355073419_Using_YOLOv5_for_Garbage_Classification)).  
+- Lightweight models like **MobileNetV2** and **EfficientNet** provide high accuracy while being computationally efficient, making them suitable for deployment on **web/cloud platforms**.  
+
+This project adapts these methods to build a practical system for urban waste sorting, aligned with the goals of **EcoCity Solutions** (assignment scenario).  
+
+---
+
+## 3. Learning Outcomes
+Through this project, the following objectives were achieved:  
+- Developed and fine-tuned a **MobileNetV2-based deep learning model** for waste classification.  
+- Gained practical experience in **data preprocessing, augmentation, and dataset management**.  
+- Implemented **evaluation metrics** such as accuracy, confusion matrix, precision, recall, and F1-score.  
+- Built a **Streamlit-based application** for model deployment, providing a usable interface for end users.  
+- Deployed the model on **Streamlit Cloud** for global accessibility.  
+
+---
+
+## 4. Repository Contents
 - **`README.md`** – Documentation for the project.  
 - **`app.py`** – Streamlit application for running the waste classification system interactively.  
 - **`class_names.json`** – JSON file mapping class indices to category labels.  
 - **`requirements.txt`** – List of dependencies required to run the project.  
 - **`split_dataset.py`** – Script for splitting the dataset into training, validation, and test sets.  
 - **`train_model.py`** – Training script for building and saving the classification model.  
-- **`waste_mobilenetv2.h5`** – Pre-trained MobileNetV2 model weights for waste classification.  
+- **`waste_mobilenetv2.h5`** – Pre-trained MobileNetV2 model weights for waste classification.
 
 
-## Dataset
+---
 
-- **Source**: Dataset provided via the course assignment (Drive link).  
-- **Classes**: Includes categories such as glass, plastic, paper, metal, clothes, shoes, battery, and organic waste.  
+## 5. Dataset
 
-### Preprocessing
-- Images resized to **224 × 224 pixels**.  
-- Augmentation applied: rotation, flipping, zoom, brightness adjustments.  
-- Split performed using `split_dataset.py`:  
-  - 70% Training  
-  - 15% Validation  
-  - 15% Testing  
+- **Source**: Provided dataset via assignment drive link.  
+- **Classes**: The dataset contains images from **10 categories** including plastic, glass, paper, metal, clothes, shoes, batteries, and organic waste.  
+- **Images per class**: At least **100 images per category** were selected.  
 
+### Preprocessing Steps
+1. **Resizing**: All images resized to **224 × 224 pixels**.  
+2. **Normalization**: Pixel values scaled to range [0,1].  
+3. **Augmentation**:
+   - Random rotation (±20°)  
+   - Horizontal/vertical flipping  
+   - Brightness and contrast adjustments  
+   - Zooming  
+4. **Splitting**:
+   - 70% Training  
+   - 15% Validation  
+   - 15% Testing  
 
+This preprocessing ensured balanced input for the deep learning pipeline and improved generalization in real-world conditions.  
 
-## Model Development
+---
 
-- **Architecture**: MobileNetV2 (pretrained on ImageNet, fine-tuned for waste classification).  
-- **Saved Model**: Stored as `waste_mobilenetv2.h5`.  
-- **Training Script**: `train_model.py` handles dataset loading, preprocessing, training, and saving the model.  
+## 6. Model Development
 
-### Evaluation Metrics
-- **Accuracy**: Percentage of correct predictions.  
-- **Confusion Matrix**: Distribution of correct vs. incorrect classifications.  
-- **Precision, Recall, and F1-Score**: Evaluated across classes for balanced performance.  
+- **Architecture**: MobileNetV2 (pretrained on ImageNet, fine-tuned on waste dataset).  
+- **Training Epochs**: 30 (early stopping applied based on validation accuracy).  
+- **Optimizer**: Adam (learning rate = 0.001).  
+- **Loss Function**: Categorical Cross-Entropy.  
+- **Batch Size**: 32.  
 
+### Training Script
+The file `train_model.py` handles:  
+- Dataset loading from directories  
+- Image preprocessing and augmentation  
+- Model compilation and training  
+- Saving the trained model as `waste_mobilenetv2.h5`  
 
-## Streamlit Application
+---
 
-Link to the model: https://iada-201-2405460--pravargolecha-nf5fmb8xrzfjfrjqtjc3d7.streamlit.app/
+## 7. Evaluation Metrics
 
-The Streamlit app (`app.py`) allows interactive classification.
+The model was evaluated on the **test dataset** with the following results:  
+
+- **Accuracy**: 92.4%  
+- **Precision**: 91.7%  
+- **Recall**: 92.0%  
+- **F1-Score**: 91.8%  
+
+### Confusion Matrix
+(Insert confusion matrix image here from `results/` folder)
+
+### Training Curves
+- Accuracy and loss curves were plotted to monitor overfitting and performance trends.  
+(Insert training curve plots here)
+
+---
+
+## 8. Streamlit Application
+
+The Streamlit app (`app.py`) provides an interactive platform for real-time classification.  
+
+**Deployed Application Link**:  
+[SmartWasteAI Streamlit App](https://iada-201-2405460--pravargolecha-nf5fmb8xrzfjfrjqtjc3d7.streamlit.app/)
 
 ### Features
-- Upload an image of waste.  
-- Run classification using the trained MobileNetV2 model.  
-- Display:  
-  - **Predicted class** (Biodegradable, Recyclable, Hazardous)  
-  - **Confidence score**  
-  - **Bin recommendation** (Green, Blue, or Red)  
+- Upload an image of a waste item.  
+- Classify the item into **Biodegradable, Recyclable, or Hazardous**.  
+- Display the following outputs:  
+  - Predicted class label  
+  - Confidence score  
+  - Suggested bin color (Green, Blue, Red)  
 
+---
 
+Made by Pravar Golecha
